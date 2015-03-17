@@ -1,0 +1,91 @@
+---
+title: "Manual vs. Automatic Transmissions Related to MPG"
+author: "Neal S"
+output: pdf_document
+---
+```{r setup, include=FALSE}
+library(knitr)
+opts_chunk$set(dev = 'pdf')
+#opts_chunk$set(dev="png", 
+#               dev.args=list(type="cairo"),
+#               dpi=96)
+#opts_chunk$set(dev="tiff", 
+#               dev.args=list(compression="lzw"),
+#               dpi=300)
+```
+# Abstract
+In this paper we will explore the relationship between automobile transmission
+type (manual vs. automatic) and miles per gallon (MPG). We will use data from
+the _mtcars_ dataset provided with R. The accepted rule in the industry is
+that manual transmissions allow for better MPG ratios. We prove that notion
+to be true using regression analysis on the provided dataset.
+
+# The Dataset
+The dataset we use is provided with the standard R installation and is taken
+from _Motor Trend_ magazine in 1974. It contains data from 32 automobiles
+contemporary to the issue and details 10 aspects of their design and performance
+along with a fuel consumption metric.
+
+Below are two plots that show some aspects of the dataset as they relate to MPG.
+The first shows the MPG reading for each car in the dataset. The next plot shows
+MPG as it relates to overall car weight. It also highlights which points refer
+to automatic vs. manual transmissions.
+
+```{r, echo=FALSE, cache=TRUE, fig.width=3.5, fig.height=3}
+library(ggplot2)
+data(mtcars)
+
+ggplot(mtcars, aes(x=seq_along(mpg),y=mpg)) +
+    geom_point(aes(color=as.factor(cyl), size=3)) +
+    ylab('Miles per Gallon') + xlab('Data Item') +
+    scale_color_discrete(name='# of Cylinders') +
+    scale_size(guide=FALSE) +
+    ggtitle('Miles Per Gallon for Each Car')
+
+mtc<-mtcars
+mtc$tran <- 'Automatic'
+mtc$tran[mtc$am==1] <- 'Manual'
+ggplot(mtc, aes(x=wt, y=mpg)) +
+    geom_point(aes(color=tran, size=3)) +
+    geom_smooth(method='lm') +
+    xlab('Car Weight (in 1000 lbs)') +
+    ylab('Miles per Gallon') +
+    scale_size(guide=FALSE) +
+    scale_color_discrete(name='Transmission') +
+    ggtitle('Miles per Gallon vs. Car Weight')
+
+
+
+```
+
+From the figures you can see that MPG is related to more than simply the
+transmission type of a car. The weight of the car and number of cylinders
+in the engine appear to have some influence on MPG as well. We will explore
+all of these issues further.
+
+
+# Analysis
+
+Briefly mention other metrics related to MPG such as cylinders, weight, and
+displacement. also make a note of how accurate the data actually is or is not,
+considering that we only have 32 entries.
+
+
+## Models
+
+Need to fit multiple models and show which one we like and why (WTF?)
+
+Should do a residual plot and explain some diagnostics on the data as to
+why it doesn't fit exactly.
+
+## Transmission Type vs. MPG
+
+Show the results. Is this valid? We should try to compare apples-to-apples
+and show that, e.g., holding other vars fixed, transmission type does make
+a difference (for 4-cyl cars, manual is better, etc. or for displacement
+groups, or rear axle ratio groups, etc.)
+
+# Conclusion
+
+Need to put a qualifier in there that shows our uncertainty and why.
+
