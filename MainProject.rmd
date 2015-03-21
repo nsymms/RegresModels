@@ -104,12 +104,17 @@ answer our original question concerning MPG and transmission type,
 but we can't really stop here; that would be irresponsible data science.
 There's far more to the data than those two variables.
 
+So we construct a few more models to look at how the other variables
+might affect the outcome.
 ```{r models2, cache=TRUE}
 m2 <- lm(mpg ~ am + wt + cyl, data=mtcars)
 m3 <- lm(mpg ~ am + disp + wt + vs + carb, data=mtcars)
 m4 <- lm(mpg ~ am + drat + wt +  carb, data=mtcars)
 m5 <- lm(mpg ~ am + wt + cyl + vs, data=mtcars)
-
+```
+We now look at the coefficients from the fitted models and see what
+we can learn:
+```{r models3}
 summary(m2)$coeff
 summary(m3)$coeff
 summary(m4)$coeff
@@ -130,7 +135,7 @@ we look at the residual plot and see that our data is indeed a good
 candidate for using linear regression. The random pattern of residuals
 spread evenly with respect to the horizontal line 0 indicates so.
 
-```{r resid, echo=FALSE, fig.width=8, fig.height=6, out.width='4in', fig.align='center', fig.cap='The residuals from model 4 appear to be evenly spread around 0, indicating that this dataset is a good candidate for a linear model.'}
+```{r resid, echo=FALSE, fig.width=8, fig.height=6, out.width='4in', fig.align='center', fig.cap='The residuals from model 4 appear are spread fairly even around 0, indicating that this dataset is a good candidate for a linear model.'}
 plot(resid(m4))
 abline(h=0, col='red', lty=2)
 ```
