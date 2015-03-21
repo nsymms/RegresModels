@@ -22,7 +22,7 @@ opts_chunk$set(dev = 'pdf')
 source('multiplot.R')
 ```
 # Abstract
-In this paper we will explore the relationship between automobile transmission
+We explore the relationship between automobile transmission
 type (manual vs. automatic) and miles per gallon (MPG). The generally accepted
 rule in the automobile industry is
 that manual transmissions allow for better MPG ratios. We prove that notion
@@ -38,8 +38,8 @@ along with a fuel consumption metric.
 
 Figure 1 contains two plots that show some aspects of the dataset as they
 relate to MPG.
-The first shows the MPG value for each car in the dataset, highlighting
-the number of cylinders in the engine of that car. The next plot shows
+The left panel shows the MPG value for each car in the dataset, highlighting
+the number of cylinders in the engine of that car. The right panel shows
 MPG as it relates to overall car weight. The color highlights which points
 refer to automatic vs. manual transmissions.
 
@@ -79,7 +79,7 @@ relationships might exist between transmission type and some of the other
 variables. If a relationship exists, it would confound the results obtained
 by ignoring the other variables. That is, any results would be less meaningful.
 
-So we will build models that include other variables to test how they
+So we build models that include the other variables to test how they
 change what we see as the relationship between transmission type and MPG.
 
 The dataset includes a few variables that are measurements rather than
@@ -100,7 +100,7 @@ for the two groups: those cars with and without automatic transmission.
 Manual transmission average MPG is `r round(m1$coef[1] + m1$coef[2],2)` and
 automatic transmission average MPG is `r round(m1$coef[1],2)`.
 This would appear to
-answer our original question concerning MPG and transmission type,
+answer our original question concerning MPG related to transmission type,
 but we can't really stop here; that would be irresponsible data science.
 There's far more to the data than those two variables.
 
@@ -112,7 +112,7 @@ m3 <- lm(mpg ~ am + disp + wt + vs + carb, data=mtcars)
 m4 <- lm(mpg ~ am + drat + wt +  carb, data=mtcars)
 m5 <- lm(mpg ~ am + wt + cyl + vs, data=mtcars)
 ```
-We now look at the coefficients from the fitted models and see what
+We now examine the coefficients from the fitted models and see what
 we can learn:
 ```{r models3}
 summary(m2)$coeff
@@ -128,8 +128,6 @@ five models. So a higher value of _am_ means higher (better) MPG.
 This translates to a manual transmission (where _am=1_)
 offering better MPG than an automatic transmission (where _am=0_).
 
-...Need to look at how much auto vs manual trans really changes things...
-
 As a final sanity check, in Figure 2
 we look at the residual plot and see that our data is indeed a good
 candidate for using linear regression. The random pattern of residuals
@@ -143,28 +141,16 @@ abline(h=0, col='red', lty=2)
 
 # Conclusion and Assumptions
 
-Need to put a qualifier in there that shows our uncertainty and why.
-
-So in answer to the question
-“Is an automatic or manual transmission better for MPG” we agree with
+To answer the question
+“Is an automatic or manual transmission better for MPG,” our study
+agrees with
 the automobile industry's notion that manual transmissions provide
 better MPG.
 
-However, it should be noted that while transmission type certainly
-affects overall MPG, it is certainly
-not the only predictor. Other variables related to automobile design
-can have a very large impact on MPG as well.
-
-"Quantify the MPG difference between automatic and manual transmissions"
 Figure 3 shows a simple box plot of MPG for automatic vs manual
-transmissions in our dataset. From this data, one can easily see that
+transmissions in our dataset. From this data, one can might propose that
 a manual transmission can, on average, make more than a 40% difference
 in MPG for the better.
-
-Another caveat is that there are only 32 samples. This is most likely not
-a large enough population to formulate a general rule regarding automobiles
-contemporary to 1974. It does, however, make a nice academic exercise and
-that's what we're doing here.
 
 ```{r box, echo=FALSE, fig.width=6, fig.height=6, out.width='3in', fig.align='center', fig.cap='The average increase of MPG for a manual transmission vs. an automatic one is over 40\\%.'}
 mtc <- mtcars[,c('am', 'mpg')]
@@ -180,3 +166,16 @@ ggplot(mtc, aes(factor(Transmission), mpg, fill=Transmission)) +
     ggtitle('MPG vs. Transmission Type')
 ```
 
+However, it should be noted that while transmission type certainly
+affects overall MPG, it is definitely
+not the only predictor. Other variables related to automobile design
+can have a very large impact on MPG as well. There is enough
+uncertainty in our study that we must say the impact of
+choosing a manual transmission over an automatic
+one is not always certain.
+
+Another qualifier to our study is that our dataset contains
+only 32 samples. This is most likely not
+a large enough population to formulate a general rule regarding automobiles
+contemporary to 1974. It does, however, make a nice academic exercise and
+that's what we've done here.
