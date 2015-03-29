@@ -1,6 +1,7 @@
 .Rproj.user
 .Rhistory
 .RData
+Lectures/*
 MainProject_cache/*
 MainProject_files/*
 *.pdf
